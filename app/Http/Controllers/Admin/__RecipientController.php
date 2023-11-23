@@ -45,6 +45,7 @@ class __RecipientController extends Controller
         $users = new User;
         $users->role_id = $request->role;
         $users->name = $request->name;
+        $users->archive = 0;
         $users->email = $request->email;
         $users->password = $request->password;
         $users->save();
@@ -108,5 +109,27 @@ class __RecipientController extends Controller
         $user->delete();
 
         return redirect()->route('admin.recipients.index')->with('success', 'Recipient delete successfully');
+    }
+    
+    public function archive($id){
+        $roles = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+        $user = User::whereIn('role_id', $roles)->find($id);
+        $success = '';
+
+        if(!$user){
+            return abort(404);
+        }
+ 
+        if($user->archive == 1){
+            $user->archive = 0;
+            $success = 'unarchive';
+        }else if($user->archive == 0){
+            $user->archive = 1;
+            $success = 'archive';
+        };
+
+        $user->save();
+
+        return redirect()->route('admin.recipients.index')->with('success', 'Recipient '.$success.' successfully');
     }
 }

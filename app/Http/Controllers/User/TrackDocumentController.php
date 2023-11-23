@@ -144,6 +144,7 @@ class TrackDocumentController extends Controller
             $trackDocument->classification = $request->classification;
             $trackDocument->reference = $request->reference;
             $trackDocument->attachment = $url;
+            $trackDocument->archive = 0;
             $trackDocument->attachment_description = $request->attachment_description;
             $trackDocument->save();
     
@@ -176,4 +177,29 @@ class TrackDocumentController extends Controller
     
         return redirect()->route('track-documents.index')->with('success', 'Document deleted successfully');
     }
+
+    public function archive($id){
+        $userId = auth()->guard('normal')->user()->id;
+        
+        $document = TrackDocument::where('user_id', $userId)
+            ->find($id);
+        $success = '';
+
+        if(!$document){
+            return abort(404);
+        }
+ 
+        if($document->archive == 1){
+            $document->archive = 0;
+            $success = 'unarchive';
+        }else if($document->archive == 0){
+            $document->archive = 1;
+            $success = 'archive';
+        };
+
+        $document->save();
+
+       return redirect()->route('track-documents.index')->with('success', 'Document '.$success.' successfully');
+    }
+
 }

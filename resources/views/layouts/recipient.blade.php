@@ -11,6 +11,7 @@
     @yield('styles')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="wrapper">

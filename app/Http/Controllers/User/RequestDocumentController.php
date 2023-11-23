@@ -44,6 +44,29 @@ class RequestDocumentController extends Controller
         return redirect()->route('request-documents.index')->with('success', 'Document deleted successfully');
     }
     
+    public function archive($id){
+        $userId = auth()->guard('normal')->user()->id;
+        
+        $document = RequestDocument::where('user_id', $userId)
+            ->find($id);
+        $success = '';
+
+        if(!$document){
+            return abort(404);
+        }
+ 
+        if($document->archive == 1){
+            $document->archive = 0;
+            $success = 'unarchive';
+        }else if($document->archive == 0){
+            $document->archive = 1;
+            $success = 'archive';
+        };
+
+        $document->save();
+
+       return redirect()->route('request-documents.index')->with('success', 'Document '.$success.' successfully');
+    }
 
     public function add(){
         return view('user.request-documents-add');
@@ -65,6 +88,7 @@ class RequestDocumentController extends Controller
         $requestDocument = new RequestDocument;
         $requestDocument->user_id = $userId;
         $requestDocument->status_id = 1;
+        $requestDocument->archive = 0;
         $requestDocument->status_date = now();
         $requestDocument->type_of_document = $request->type_of_document;
         $requestDocument->save();

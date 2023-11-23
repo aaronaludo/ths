@@ -22,7 +22,7 @@ class _AuthController extends Controller
         if (Auth::guard('recipient')->attempt($credentials)) {
             $user = Auth::guard('recipient')->user();
             
-            if ($user->role_id >= 3 && $user->role_id <= 19) {
+            if ($user->role_id >= 3 && $user->role_id <= 19 && $user->archive === 0) {
                 return redirect()->intended('/recipient/dashboard');
             }
     

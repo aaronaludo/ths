@@ -27,8 +27,9 @@ use App\Http\Controllers\Admin\__RecipientController;
 use App\Http\Controllers\Admin\__AdminController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
+
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('process.login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -58,6 +59,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/users/edit/{id}', [__UserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/admin/users/update/{id}', [__UserController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{id}', [__UserController::class, 'destroy'])->name('admin.users.destroy');
+    Route::put('/admin/users/{id}', [__UserController::class, 'archive'])->name('admin.users.archive');
 
     // Route::get('/admin/recipients', [__RecipientController::class, 'index'])->name('admin.recipients.index');
     // Route::get('/admin/recipients/add', [__RecipientController::class, 'add'])->name('admin.recipients.add');
@@ -73,6 +75,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/recipients/edit/{id}', [__RecipientController::class, 'edit'])->name('admin.recipients.edit');
     Route::put('/admin/recipients/update/{id}', [__RecipientController::class, 'update'])->name('admin.recipients.update');
     Route::delete('/admin/recipients/{id}', [__RecipientController::class, 'destroy'])->name('admin.recipients.destroy');
+    Route::put('/admin/recipients/{id}', [__RecipientController::class, 'archive'])->name('admin.recipients.archive');
 
     // Route::get('/admin/admins', [__AdminController::class, 'index'])->name('admin.admins.index');
     // Route::get('/admin/admins/add', [__AdminController::class, 'add'])->name('admin.admins.add');
@@ -88,7 +91,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/admins/edit/{id}', [__AdminController::class, 'edit'])->name('admin.admins.edit');
     Route::put('/admin/admins/update/{id}', [__AdminController::class, 'update'])->name('admin.admins.update');
     Route::delete('/admin/admins/{id}', [__AdminController::class, 'destroy'])->name('admin.admins.destroy');
-
+    Route::put('/admin/admins/{id}', [__AdminController::class, 'archive'])->name('admin.admins.archive');
 });
 
 Route::middleware(['auth:recipient'])->group(function () {
@@ -116,6 +119,9 @@ Route::middleware(['auth:normal'])->group(function () {
     Route::get('/track-documents', [TrackDocumentController::class, 'index'])->name('track-documents.index');
     Route::get('/track-documents/search', [TrackDocumentController::class, 'search'])->name('track-documents.search');
     Route::delete('/track-documents/{id}', [TrackDocumentController::class, 'destroy'])->name('track-documents.destroy');
+    Route::put('/track-documents/{id}', [TrackDocumentController::class, 'archive'])->name('track-documents.archive');
+
+
     Route::get('/track-documents/compose', [TrackDocumentController::class, 'composeIndex'])->name('track-documents.compose');
     Route::post('/track-documents/store', [TrackDocumentController::class, 'composeStore'])->name('track-documents.store');
     Route::get('/track-documents/edit/{id}', [TrackDocumentController::class, 'composeEdit'])->name('track-documents.edit');
@@ -124,6 +130,8 @@ Route::middleware(['auth:normal'])->group(function () {
     Route::get('/request-documents', [RequestDocumentController::class, 'index'])->name('request-documents.index');
     Route::get('/request-documents/search', [RequestDocumentController::class, 'search'])->name('request-documents.search');
     Route::delete('/request-documents/{id}', [RequestDocumentController::class, 'destroy'])->name('request-documents.destroy');
+    Route::put('/request-documents/{id}', [RequestDocumentController::class, 'archive'])->name('request-documents.archive');
+
     Route::get('/request-documents/add', [RequestDocumentController::class, 'add'])->name('request-documents.add');
     Route::post('/request-documents/store', [RequestDocumentController::class, 'store'])->name('request-documents.store');
     Route::get('/request-documents/edit/{id}', [RequestDocumentController::class, 'edit'])->name('request-documents.edit');

@@ -16,11 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('role_id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->integer('archive');
             $table->string('password');
             $table->timestamps();
             
             // Define a foreign key relationship
-            $table->foreign('role_id')->references('id')->on('roles');
+            // $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

@@ -42,6 +42,7 @@ class __AdminController extends Controller
         $users = new User;
         $users->role_id = 2;
         $users->name = $request->name;
+        $users->archive = 0;
         $users->email = $request->email;
         $users->password = $request->password;
         $users->save();
@@ -99,4 +100,26 @@ class __AdminController extends Controller
 
         return redirect()->route('admin.admins.index')->with('success', 'Admin delete successfully');
     }
+
+    public function archive($id){
+        $user = User::where('role_id', 2)->find($id);
+        $success = '';
+
+        if(!$user){
+            return abort(404);
+        }
+ 
+        if($user->archive == 1){
+            $user->archive = 0;
+            $success = 'unarchive';
+        }else if($user->archive == 0){
+            $user->archive = 1;
+            $success = 'archive';
+        };
+
+        $user->save();
+
+       return redirect()->route('admin.admins.index')->with('success', 'Admin '.$success.' successfully');
+    }
+
 }

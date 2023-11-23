@@ -23,10 +23,11 @@ return new class extends Migration
             $table->string('reference');
             $table->string('attachment');
             $table->string('attachment_description');
+            $table->integer('archive');
             $table->timestamps();
             
             // Define foreign key relationships
-            $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -59,6 +59,15 @@
                                                                 <i class="fa-solid fa-trash color-red"></i>
                                                             </button>
                                                         </div>
+                                                        <div class="action-button">
+                                                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#archive-modal-{{ $document->id }}" title="Delete">
+                                                                @if ($document->archive == 0)
+                                                                    <i class="fa-solid fa-box-archive text-primary"></i>
+                                                                @else
+                                                                    <i class="fa-solid fa-box-archive text-secondary"></i>
+                                                                @endif
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -78,6 +87,27 @@
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade" id="archive-modal-{{ $document->id }}" tabindex="-1" aria-labelledby="archive-modal-{{ $document->id }}-label" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="archive-modal-{{ $document->id }}-label">Confirm {{ $document->archive == 1 ? 'Unarchive' : 'Archive' }}</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to {{ $document->archive == 1 ? 'unarchive' : 'archive' }} this {{ $document->id }} document?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                            <form method="POST" action="{{ route('track-documents.archive', $document->id) }}">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-primary">{{ $document->archive == 1 ? 'Unarchive' : 'Archive' }}</button>
                                                             </form>
                                                         </div>
                                                     </div>

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->timestamp('status_date');
             
             // Define foreign key relationships
-            $table->foreign('track_document_id')->references('id')->on('track_documents');
-            $table->foreign('role_id')->references('id')->on('roles');
-            $table->foreign('status_id')->references('id')->on('status');
+            // $table->foreign('track_document_id')->references('id')->on('track_documents');
+            // $table->foreign('role_id')->references('id')->on('roles');
+            // $table->foreign('status_id')->references('id')->on('status');
         });
     }
 

@@ -14,7 +14,7 @@ class _RequestDocumentReviewController extends Controller
         $requestDocuments = [];
     
         if ($user_role_id === 10) {
-            $requestDocuments = RequestDocument::all();
+            $requestDocuments = RequestDocument::where('archive', 0)->get();
         }
     
         return view('recipient.request-document-reviews', compact('requestDocuments'));

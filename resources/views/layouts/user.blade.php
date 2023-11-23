@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/responsive.css') }}" />
     <title>@yield('title')</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="wrapper">

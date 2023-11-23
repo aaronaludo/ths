@@ -22,7 +22,7 @@ class AuthController extends Controller
         if (Auth::guard('normal')->attempt($credentials)) {
             $user = Auth::guard('normal')->user();
             
-            if ($user->role_id === 1) {
+            if ($user->role_id === 1 && $user->archive === 0) {
                 return redirect()->intended('/dashboard');
             }
     

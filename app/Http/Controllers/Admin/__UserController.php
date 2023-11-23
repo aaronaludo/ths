@@ -42,6 +42,7 @@ class __UserController extends Controller
         $users = new User;
         $users->role_id = 1;
         $users->name = $request->name;
+        $users->archive = 0;
         $users->email = $request->email;
         $users->password = $request->password;
         $users->save();
@@ -106,5 +107,26 @@ class __UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('success', 'User delete successfully');
+    }
+
+    public function archive($id){
+        $user = User::where('role_id', 1)->find($id);
+        $success = '';
+
+        if(!$user){
+            return abort(404);
+        }
+ 
+        if($user->archive == 1){
+            $user->archive = 0;
+            $success = 'unarchive';
+        }else if($user->archive == 0){
+            $user->archive = 1;
+            $success = 'archive';
+        };
+
+        $user->save();
+
+       return redirect()->route('admin.users.index')->with('success', 'User '.$success.' successfully');
     }
 }

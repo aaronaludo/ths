@@ -15,7 +15,7 @@
                 <h4 class="alert-heading">Sender: {{ $recipient->track_document->user->name }}</h4>
                 <p>Recipients:</p>
                 <ul>
-                    @foreach($recipient->track_document->recipients as $frecipient)
+                    @foreach($recipient->track_document->recipients->sortByDesc('status_date'); as $frecipient)
                         <li>
                             <div class="card mb-3 col-12 col-lg-6">
                                 <div class="card-header">

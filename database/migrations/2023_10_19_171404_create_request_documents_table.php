@@ -17,11 +17,12 @@ return new class extends Migration
             $table->unsignedBigInteger('status_id');
             $table->timestamp('status_date');
             $table->string('type_of_document');
+            $table->integer('archive');
             $table->timestamps();
             
             // Define foreign key relationships
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('status_id')->references('id')->on('status');
+            // $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('status_id')->references('id')->on('status');
         });
     }
 

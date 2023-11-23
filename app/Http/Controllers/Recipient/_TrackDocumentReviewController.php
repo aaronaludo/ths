@@ -12,8 +12,12 @@ class _TrackDocumentReviewController extends Controller
 {
     public function index(){
         $user_role_id = auth()->guard('recipient')->user()->role->id;
-        $recipients = Recipient::where('role_id', $user_role_id)->get();
-
+        $recipients = Recipient::where('role_id', $user_role_id)
+        ->whereHas('track_document', function ($query) {
+            $query->where('archive', 0);
+        })
+        ->get();
+        
         return view('recipient.track-document-reviews', compact('recipients'));
     }
     public function search(Request $request){
@@ -33,6 +37,8 @@ class _TrackDocumentReviewController extends Controller
         $recipient = Recipient::where('role_id', $user_role_id)
         ->where('track_document_id', $id)
         ->first();
+
+        // dd($recipient->track_document->recipients);
 
         if (!$recipient) {
             return abort(404);
