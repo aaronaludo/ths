@@ -13,9 +13,34 @@
                 <div class="alert alert-primary">
                 <h2 class="alert-heading mb-3">Subject: {{ $recipient->track_document->subject }}</h2>
                 <h4 class="alert-heading">Sender: {{ $recipient->track_document->user->name }}</h4>
-                <p>Recipients:</p>
+                <p>Pending Recipients:</p>
                 <ul>
-                    @foreach($recipient->track_document->recipients->sortByDesc('status_date'); as $frecipient)
+                    @foreach($recipient->track_document->recipients->sortByDesc('status_date')->where('status_id', 1); as $frecipient)
+                        <li>
+                            <div class="card mb-3 col-12 col-lg-6">
+                                <div class="card-header">
+                                    @if($frecipient->status->id == 1)
+                                        <span class="badge text-bg-warning">{{ $frecipient->status->name }}</span>
+                                    @elseif($frecipient->status->id == 2)
+                                        <span class="badge text-bg-success">{{ $frecipient->status->name }}</span>
+                                    @elseif($frecipient->status->id == 3)
+                                        <span class="badge text-bg-danger">{{ $frecipient->status->name }}</span>
+                                    @else
+                                        <span class="badge">{{ $frecipient->status->name }}</span>
+                                    @endif
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">{{ $frecipient->role->name }}</h5>
+                                    <p class="card-text">{{ date("F j, Y, g:i a", strtotime($frecipient->status_date)) }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+                <hr />
+                <p>Recipients Steps:</p>
+                <ul>
+                    @foreach($recipient->track_document->recipients->sortByDesc('status_date')->whereIn('status_id', [2, 3]); as $frecipient)
                         <li>
                             <div class="card mb-3 col-12 col-lg-6">
                                 <div class="card-header">
