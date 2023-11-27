@@ -10,7 +10,6 @@
     "require": {
         "php": "^8.1",
         "bacon/bacon-qr-code": "^2.0",
-        "chartisan/chartisan": "^1.2",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/framework": "^10.10",
