@@ -30,6 +30,18 @@
                             <img src="{{ asset('assets/images/profile-45x45.png') }}" alt="User" title="User" class="round" /> {{ auth()->guard('recipient')->user()->name }} ({{ auth()->guard('recipient')->user()->role->name }})
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <a class="dropdown-item" href="{{ route('recipient.notifications.index') }}">Nofitication </a>
+                                    </div>
+                                    @if ($notifications !== 0)
+                                    <div style="background: red; margin-right: 10px;border-radius: 100px;height:18px;width:18px" class="d-flex align-items-center justify-content-center">
+                                        <div class="text-white" style="font-size: 9px">{{ $notifications }}</div>
+                                    </div>
+                                    @endif
+                                </div>
+                            </li>
                             <li><a class="dropdown-item" href="{{ route('recipient.account.edit-profile') }}">Edit Profile</a></li>
                             <li><a class="dropdown-item" href="{{ route('recipient.account.change-password') }}">Change Password</a></li>
                             <li>
@@ -65,7 +77,7 @@
         <div id="content">
             @yield('content')
         </div>
-        <footer>Wyrsoft Tech. &copy; 2023 All Rights Reserved.</footer>
+        <footer>Tandaay High School. &copy; 2023 All Rights Reserved.</footer>
     </div>
     @yield('scripts')
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>

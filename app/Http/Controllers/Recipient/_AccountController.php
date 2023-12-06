@@ -7,15 +7,24 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Notification;
 
 class _AccountController extends Controller
 {
     public function editProfile(){
-        return view('recipient.edit-profile');
+        $user_role_id = auth()->guard('recipient')->user()->role->id;
+
+        $notifications = Notification::where('recipient_id', $user_role_id)->where('read_status', 0)->count();
+
+        return view('recipient.edit-profile', compact('notifications'));
     }
 
     public function changePassword(){
-        return view('recipient.change-password');
+        $user_role_id = auth()->guard('recipient')->user()->role->id;
+
+        $notifications = Notification::where('recipient_id', $user_role_id)->where('read_status', 0)->count();
+
+        return view('recipient.change-password', compact('notifications'));
     }
 
     public function updateProfile(Request $request){

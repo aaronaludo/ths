@@ -16,6 +16,7 @@ use App\Http\Controllers\Recipient\_ReportController;
 use App\Http\Controllers\Recipient\_SupportController;
 use App\Http\Controllers\Recipient\_TrackDocumentReviewController;
 use App\Http\Controllers\Recipient\_RequestDocumentReviewController;
+use App\Http\Controllers\Recipient\_NotificationController;
 
 use App\Http\Controllers\Admin\__AuthController;
 use App\Http\Controllers\Admin\__DashboardController;
@@ -26,9 +27,22 @@ use App\Http\Controllers\Admin\__UserController;
 use App\Http\Controllers\Admin\__RecipientController;
 use App\Http\Controllers\Admin\__AdminController;
 
-Route::get('/', function () {
-    return redirect('/login');
-});
+use App\Http\Controllers\Admin\__AboutContentController;
+use App\Http\Controllers\Admin\__AcademicCalendarContentController;
+use App\Http\Controllers\Admin\__FaqsContentController;
+use App\Http\Controllers\Admin\__GalleryShowcaseContentController;
+use App\Http\Controllers\Admin\__HomeContentController;
+use App\Http\Controllers\Admin\__NewsContentController;
+use App\Http\Controllers\Admin\__TeacherSpotlightContentController;
+
+
+Route::get('/', [__HomeContentController::class, 'home'])->name('home');
+Route::get('/about', [__AboutContentController::class, 'home'])->name('about');
+Route::get('/academic-calendar', [__AcademicCalendarContentController::class, 'home'])->name('academic-calendar');
+Route::get('/faqs', [__FaqsContentController::class, 'home'])->name('faqs');
+Route::get('/gallery-showcase', [__GalleryShowcaseContentController::class, 'home'])->name('gallery-showcase');
+Route::get('/news', [__NewsContentController::class, 'home'])->name('news');
+Route::get('/teacher-spotlight', [__TeacherSpotlightContentController::class, 'home'])->name('teacher-spotlight');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('process.login');
@@ -92,6 +106,69 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::put('/admin/admins/update/{id}', [__AdminController::class, 'update'])->name('admin.admins.update');
     Route::delete('/admin/admins/{id}', [__AdminController::class, 'destroy'])->name('admin.admins.destroy');
     Route::put('/admin/admins/{id}', [__AdminController::class, 'archive'])->name('admin.admins.archive');
+
+    Route::get('/admin/about', [__AboutContentController::class, 'index'])->name('admin.about.index');
+    Route::get('/admin/about/add', [__AboutContentController::class, 'add'])->name('admin.about.add');
+    Route::get('/admin/about/search', [__AboutContentController::class, 'search'])->name('admin.about.search');
+    Route::post('/admin/about/store', [__AboutContentController::class, 'store'])->name('admin.about.store');
+    Route::get('/admin/about/{id}', [__AboutContentController::class, 'view'])->name('admin.about.view');
+    Route::get('/admin/about/edit/{id}', [__AboutContentController::class, 'edit'])->name('admin.about.edit');
+    Route::put('/admin/about/update/{id}', [__AboutContentController::class, 'update'])->name('admin.about.update');
+    Route::delete('/admin/about/{id}', [__AboutContentController::class, 'destroy'])->name('admin.about.destroy');
+
+    Route::get('/admin/academic-calendar', [__AcademicCalendarContentController::class, 'index'])->name('admin.academic-calendar.index');
+    Route::get('/admin/academic-calendar/add', [__AcademicCalendarContentController::class, 'add'])->name('admin.academic-calendar.add');
+    Route::get('/admin/academic-calendar/search', [__AcademicCalendarContentController::class, 'search'])->name('admin.academic-calendar.search');
+    Route::post('/admin/academic-calendar/store', [__AcademicCalendarContentController::class, 'store'])->name('admin.academic-calendar.store');
+    Route::get('/admin/academic-calendar/{id}', [__AcademicCalendarContentController::class, 'view'])->name('admin.academic-calendar.view');
+    Route::get('/admin/academic-calendar/edit/{id}', [__AcademicCalendarContentController::class, 'edit'])->name('admin.academic-calendar.edit');
+    Route::put('/admin/academic-calendar/update/{id}', [__AcademicCalendarContentController::class, 'update'])->name('admin.academic-calendar.update');
+    Route::delete('/admin/academic-calendar/{id}', [__AcademicCalendarContentController::class, 'destroy'])->name('admin.academic-calendar.destroy');
+
+    Route::get('/admin/faqs', [__FaqsContentController::class, 'index'])->name('admin.faqs.index');
+    Route::get('/admin/faqs/add', [__FaqsContentController::class, 'add'])->name('admin.faqs.add');
+    Route::get('/admin/faqs/search', [__FaqsContentController::class, 'search'])->name('admin.faqs.search');
+    Route::post('/admin/faqs/store', [__FaqsContentController::class, 'store'])->name('admin.faqs.store');
+    Route::get('/admin/faqs/{id}', [__FaqsContentController::class, 'view'])->name('admin.faqs.view');
+    Route::get('/admin/faqs/edit/{id}', [__FaqsContentController::class, 'edit'])->name('admin.faqs.edit');
+    Route::put('/admin/faqs/update/{id}', [__FaqsContentController::class, 'update'])->name('admin.faqs.update');
+    Route::delete('/admin/faqs/{id}', [__FaqsContentController::class, 'destroy'])->name('admin.faqs.destroy');
+
+    Route::get('/admin/gallery-showcase', [__GalleryShowcaseContentController::class, 'index'])->name('admin.gallery-showcase.index');
+    Route::get('/admin/gallery-showcase/add', [__GalleryShowcaseContentController::class, 'add'])->name('admin.gallery-showcase.add');
+    Route::get('/admin/gallery-showcase/search', [__GalleryShowcaseContentController::class, 'search'])->name('admin.gallery-showcase.search');
+    Route::post('/admin/gallery-showcase/store', [__GalleryShowcaseContentController::class, 'store'])->name('admin.gallery-showcase.store');
+    Route::get('/admin/gallery-showcase/{id}', [__GalleryShowcaseContentController::class, 'view'])->name('admin.gallery-showcase.view');
+    Route::get('/admin/gallery-showcase/edit/{id}', [__GalleryShowcaseContentController::class, 'edit'])->name('admin.gallery-showcase.edit');
+    Route::put('/admin/gallery-showcase/update/{id}', [__GalleryShowcaseContentController::class, 'update'])->name('admin.gallery-showcase.update');
+    Route::delete('/admin/gallery-showcase/{id}', [__GalleryShowcaseContentController::class, 'destroy'])->name('admin.gallery-showcase.destroy');
+
+    Route::get('/admin/home', [__HomeContentController::class, 'index'])->name('admin.home.index');
+    Route::get('/admin/home/add', [__HomeContentController::class, 'add'])->name('admin.home.add');
+    Route::get('/admin/home/search', [__HomeContentController::class, 'search'])->name('admin.home.search');
+    Route::post('/admin/home/store', [__HomeContentController::class, 'store'])->name('admin.home.store');
+    Route::get('/admin/home/{id}', [__HomeContentController::class, 'view'])->name('admin.home.view');
+    Route::get('/admin/home/edit/{id}', [__HomeContentController::class, 'edit'])->name('admin.home.edit');
+    Route::put('/admin/home/update/{id}', [__HomeContentController::class, 'update'])->name('admin.home.update');
+    Route::delete('/admin/home/{id}', [__HomeContentController::class, 'destroy'])->name('admin.home.destroy');
+
+    Route::get('/admin/news', [__NewsContentController::class, 'index'])->name('admin.news.index');
+    Route::get('/admin/news/add', [__NewsContentController::class, 'add'])->name('admin.news.add');
+    Route::get('/admin/news/search', [__NewsContentController::class, 'search'])->name('admin.news.search');
+    Route::post('/admin/news/store', [__NewsContentController::class, 'store'])->name('admin.news.store');
+    Route::get('/admin/news/{id}', [__NewsContentController::class, 'view'])->name('admin.news.view');
+    Route::get('/admin/news/edit/{id}', [__NewsContentController::class, 'edit'])->name('admin.news.edit');
+    Route::put('/admin/news/update/{id}', [__NewsContentController::class, 'update'])->name('admin.news.update');
+    Route::delete('/admin/news/{id}', [__NewsContentController::class, 'destroy'])->name('admin.news.destroy');
+
+    Route::get('/admin/teacher-spotlight', [__TeacherSpotlightContentController::class, 'index'])->name('admin.teacher-spotlight.index');
+    Route::get('/admin/teacher-spotlight/add', [__TeacherSpotlightContentController::class, 'add'])->name('admin.teacher-spotlight.add');
+    Route::get('/admin/teacher-spotlight/search', [__TeacherSpotlightContentController::class, 'search'])->name('admin.teacher-spotlight.search');
+    Route::post('/admin/teacher-spotlight/store', [__TeacherSpotlightContentController::class, 'store'])->name('admin.teacher-spotlight.store');
+    Route::get('/admin/teacher-spotlight/{id}', [__TeacherSpotlightContentController::class, 'view'])->name('admin.teacher-spotlight.view');
+    Route::get('/admin/teacher-spotlight/edit/{id}', [__TeacherSpotlightContentController::class, 'edit'])->name('admin.teacher-spotlight.edit');
+    Route::put('/admin/teacher-spotlight/update/{id}', [__TeacherSpotlightContentController::class, 'update'])->name('admin.teacher-spotlight.update');
+    Route::delete('/admin/teacher-spotlight/{id}', [__TeacherSpotlightContentController::class, 'destroy'])->name('admin.teacher-spotlight.destroy');
 });
 
 Route::middleware(['auth:recipient'])->group(function () {
@@ -102,6 +179,8 @@ Route::middleware(['auth:recipient'])->group(function () {
     Route::post('/recipient/update-change-password', [_AccountController::class, 'updatePassword'])->name('recipient.account.update_change_password');
     Route::get('/recipient/reports', [_ReportController::class, 'index'])->name('recipient.reports.index');
     Route::get('/recipient/support', [_SupportController::class, 'index'])->name('recipient.support.index');
+    Route::get('/recipient/notifications', [_NotificationController::class, 'index'])->name('recipient.notifications.index');
+    Route::put('/recipient/notifications/{id}', [_NotificationController::class, 'status'])->name('recipient.notifications.status');
     Route::get('/recipient/track-document-reviews', [_TrackDocumentReviewController::class, 'index'])->name('recipient.track-document-reviews.index');
     Route::get('/recipient/track-document-reviews/search', [_TrackDocumentReviewController::class, 'search'])->name('recipient.track-document-reviews.search');
     Route::get('/recipient/track-document-reviews/qr-scanner', [_TrackDocumentReviewController::class, 'qrScanner'])->name('recipient.track-document-reviews.qr-scanner');

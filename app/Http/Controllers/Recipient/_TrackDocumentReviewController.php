@@ -7,18 +7,21 @@ use App\Models\Recipient;
 use Illuminate\Http\Request;
 use App\Models\TrackDocument;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Models\Notification;
 
 class _TrackDocumentReviewController extends Controller
 {
     public function index(){
         $user_role_id = auth()->guard('recipient')->user()->role->id;
+
+        $notifications = Notification::where('recipient_id', $user_role_id)->where('read_status', 0)->count();
         $recipients = Recipient::where('role_id', $user_role_id)
         ->whereHas('track_document', function ($query) {
             $query->where('archive', 0);
         })
         ->get();
         
-        return view('recipient.track-document-reviews', compact('recipients'));
+        return view('recipient.track-document-reviews', compact('recipients', 'notifications'));
     }
     public function search(Request $request){
         $user_role_id = auth()->guard('recipient')->user()->role->id;
@@ -34,6 +37,8 @@ class _TrackDocumentReviewController extends Controller
     }
     public function view($id){
         $user_role_id = auth()->guard('recipient')->user()->role->id;
+        $notifications = Notification::where('recipient_id', $user_role_id)->where('read_status', 0)->count();
+
         $recipient = Recipient::where('role_id', $user_role_id)
         ->where('track_document_id', $id)
         ->first();
@@ -44,7 +49,7 @@ class _TrackDocumentReviewController extends Controller
             return abort(404);
         }
 
-        return view('recipient.track-document-reviews-view', compact('recipient'));
+        return view('recipient.track-document-reviews-view', compact('recipient', 'notifications'));
     }
 
     public function changeRecipientStatus($id, Request $request){
@@ -66,7 +71,10 @@ class _TrackDocumentReviewController extends Controller
     }
 
     public function qrScanner(){
-        return view('recipient.track-document-reviews-qr-scanner');
+        $user_role_id = auth()->guard('recipient')->user()->role->id;
+        $notifications = Notification::where('recipient_id', $user_role_id)->where('read_status', 0)->count();
+
+        return view('recipient.track-document-reviews-qr-scanner', compact('notifications'));
     }
 
     public function qrScannerResult(Request $request) {

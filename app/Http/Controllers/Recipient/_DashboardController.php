@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\RequestDocument;
 use Illuminate\Http\Request;
+use App\Models\Notification;
 
 class _DashboardController extends Controller
 {
     public function index(){
+        $user_role_id = auth()->guard('recipient')->user()->role->id;
+
+        $notifications = Notification::where('recipient_id', $user_role_id)->where('read_status', 0)->count();
+
         $user_role_id = auth()->guard('recipient')->user()->role->id;
         $totalTrackDocuments = Recipient::where('role_id', $user_role_id)->count();
         $pendingTrackDocuments =  Recipient::where('role_id', $user_role_id)->where('status_id', 1)->count();
@@ -32,6 +37,6 @@ class _DashboardController extends Controller
         }
 
         return view('recipient.dashboard', compact('totalTrackDocuments', 'pendingTrackDocuments', 'successTrackDocuments', 'failedTrackDocuments', 'shortTrackDocuments', 'totalRequestDocuments',
-            'pendingRequestDocuments', 'successRequestDocuments', 'failedRequestDocuments', 'shortRequestDocuments'));
+            'pendingRequestDocuments', 'successRequestDocuments', 'failedRequestDocuments', 'shortRequestDocuments', 'notifications'));
     }
 }

@@ -5,19 +5,22 @@ namespace App\Http\Controllers\Recipient;
 use App\Http\Controllers\Controller;
 use App\Models\RequestDocument;
 use Illuminate\Http\Request;
+use App\Models\Notification;
 
 class _RequestDocumentReviewController extends Controller
 {
     public function index() {
         $user_role_id = auth()->guard('recipient')->user()->role->id;
-    
+
+        $notifications = Notification::where('recipient_id', $user_role_id)->where('read_status', 0)->count();
+
         $requestDocuments = [];
     
         if ($user_role_id === 10) {
             $requestDocuments = RequestDocument::where('archive', 0)->get();
         }
     
-        return view('recipient.request-document-reviews', compact('requestDocuments'));
+        return view('recipient.request-document-reviews', compact('requestDocuments', 'notifications'));
     }
 
     public function search(Request $request){
@@ -35,7 +38,7 @@ class _RequestDocumentReviewController extends Controller
 
     public function view($id){
         $user_role_id = auth()->guard('recipient')->user()->role->id;
-    
+        $notifications = Notification::where('recipient_id', $user_role_id)->where('read_status', 0)->count();
         $requestDocument = null;
     
         if ($user_role_id === 10) {
@@ -46,7 +49,7 @@ class _RequestDocumentReviewController extends Controller
             return abort(404);
         }
 
-        return view('recipient.request-document-reviews-view', compact('requestDocument'));
+        return view('recipient.request-document-reviews-view', compact('requestDocument', 'notifications'));
     }
     public function changeRequestDocumentStatus($id, Request $request){
         $user_role_id = auth()->guard('recipient')->user()->role->id;

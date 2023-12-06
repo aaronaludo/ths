@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TrackDocument;
 use App\Models\Recipient;
 use App\Models\Role;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -155,6 +156,12 @@ class TrackDocumentController extends Controller
                 $recipients->status_id = 1;
                 $recipients->status_date = now();
                 $recipients->save();
+
+                $notification = new Notification();
+                $notification->recipient_id = $recipients->role_id;
+                $notification->message = "You received a track documents";
+                $notification->read_status = 0;
+                $notification->save();
             }
         });
     

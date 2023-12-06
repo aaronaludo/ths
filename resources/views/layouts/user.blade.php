@@ -88,7 +88,7 @@
         <div id="content">
             @yield('content')
         </div>
-        <footer>Wyrsoft Tech. &copy; 2023 All Rights Reserved.</footer>
+        <footer>Tandaay High School. &copy; 2023 All Rights Reserved.</footer>
     </div>
     @yield('modal')
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>

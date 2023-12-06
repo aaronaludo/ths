@@ -65,7 +65,7 @@
         </div>
       </div>
       <footer style="margin-left: 0">
-        Wyrsoft Tech. &copy; 2023 All Rights Reserved
+        Tandaay High School. &copy; 2023 All Rights Reserved
       </footer>
     </div>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>

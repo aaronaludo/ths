@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\RequestDocument;
-
+use App\Models\Notification;
 
 class RequestDocumentController extends Controller
 {
@@ -93,6 +93,12 @@ class RequestDocumentController extends Controller
         $requestDocument->type_of_document = $request->type_of_document;
         $requestDocument->save();
     
+        $notification = new Notification();
+        $notification->recipient_id = 10;
+        $notification->message = "You received a request documents";
+        $notification->read_status = 0;
+        $notification->save();
+
         return redirect()->route('request-documents.add')->with('success', 'Document created successfully');
     }    
 

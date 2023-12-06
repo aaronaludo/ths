@@ -53,13 +53,20 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('admin.reports.index') }}" class="{{ request()->routeIs('admin.reports.index') ? 'active' : '' }}"><i class="fa-solid fa-chart-simple"></i> Reports</a></li>
+                <li><a href="{{ route('admin.about.index') }}" class="{{ request()->routeIs('admin.about.index') ? 'active' : '' }}"><i class="fa-solid fa-circle-info"></i> About</a></li>
+                <li><a href="{{ route('admin.academic-calendar.index') }}" class="{{ request()->routeIs('admin.academic-calendar.index') ? 'active' : '' }}"><i class="fa-solid fa-circle-info"></i> Academic Calendar</a></li>
+                <li><a href="{{ route('admin.faqs.index') }}" class="{{ request()->routeIs('admin.faqs.index') ? 'active' : '' }}"><i class="fa-solid fa-circle-info"></i> FAQs</a></li>
+                <li><a href="{{ route('admin.gallery-showcase.index') }}" class="{{ request()->routeIs('admin.gallery-showcase.index') ? 'active' : '' }}"><i class="fa-solid fa-circle-info"></i> Gallery Showcase</a></li>
+                <li><a href="{{ route('admin.home.index') }}" class="{{ request()->routeIs('admin.home.index') ? 'active' : '' }}"><i class="fa-solid fa-circle-info"></i> Home</a></li>
+                <li><a href="{{ route('admin.news.index') }}" class="{{ request()->routeIs('admin.news.index') ? 'active' : '' }}"><i class="fa-solid fa-circle-info"></i> News</a></li>
+                <li><a href="{{ route('admin.teacher-spotlight.index') }}" class="{{ request()->routeIs('admin.teacher-spotlight.index') ? 'active' : '' }}"><i class="fa-solid fa-circle-info"></i> Teacher Spotlight</a></li>
                 <li><a href="{{ route('admin.support.index') }}" class="{{ request()->routeIs('admin.support.index') ? 'active' : '' }}"><i class="fa-solid fa-circle-info"></i> Support</a></li>
             </ul>
         </nav>
         <div id="content">
             @yield('content')
         </div>
-        <footer>Wyrsoft Tech. &copy; 2023 All Rights Reserved.</footer>
+        <footer>Tandaay High School. &copy; 2023 All Rights Reserved.</footer>
     </div>
     @yield('modal')
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
